@@ -1453,7 +1453,9 @@ the last)."
 ;;; Tired of editing this in 8 places every time I remember that there
 ;;; is another method-defining keyword
 (defvar cperl-sub-keywords
-  '("sub" "multi method" "method" "before" "after" "around" "override" "augment"))
+  '("sub" "multi method" "method" "before" "after" "around" "override" "augment"
+    "class" "role"                      ; Added by RCT
+    ))
 
 (defvar cperl-sub-regexp (regexp-opt cperl-sub-keywords))
 
@@ -5736,6 +5738,7 @@ indentation and initial hashes.  Behaves usually outside of comment."
 		 "foreach" "continue" "exit" "die" "last" "goto" "next"
 		 "redo" "return" "local" "exec"
                  "class" "role" "with" "extends"
+                 "namespace"            ; Added by RCT
                  "do" "dump"
                  "use" "our"
 		 "require" "package" "eval" "my" "state"
@@ -5837,6 +5840,7 @@ indentation and initial hashes.  Behaves usually outside of comment."
 	      "u\\(se\\|n\\(shift\\|ti\\(l\\|e\\)\\|def\\|less\\)\\)\\|"
 	      "wh\\(en\\|ile\\)\\|y\\|__\\(END\\|DATA\\)__" ;__DATA__ added manually
 	      "\\|[sm]"			; Added manually
+              "\\|clean"                ; Added by RCT
 	      "\\)\\>") 2 'cperl-nonoverridable-face)
 	    ;;		(mapconcat 'identity
 	    ;;			   '("#endif" "#else" "#ifdef" "#ifndef" "#if"
@@ -5872,7 +5876,9 @@ indentation and initial hashes.  Behaves usually outside of comment."
             ;; XXX: i think this is redundant for the sub-alikes, but
             ;; it will fix a corner case where the prototype has
             ;; nested parens in it.
-	    '("\\<\\(package\\|require\\|use\\|import\\|no\\|bootstrap\\|class\\|role\\|\\(?:multi \\)?method\\|before\\|after\\|around\\|override\\|augment\\)[ \t]+\\(?:#.+\n\\|[ \t]*\n\\)?[ \t]*\\([a-zA-z_][a-zA-z_0-9:]*\\)\\([ \t;]\\|$\\)" ; require A if B;
+
+            ;; "namespace" added by RCT
+	    '("\\<\\(package\\|require\\|use\\|import\\|no\\|bootstrap\\|namespace\\|class\\|role\\|\\(?:multi \\)?method\\|before\\|after\\|around\\|override\\|augment\\)[ \t]+\\(?:#.+\n\\|[ \t]*\n\\)?[ \t]*\\([a-zA-z_][a-zA-z_0-9:]*\\)\\([ \t;]\\|$\\)" ; require A if B;
 	      2 font-lock-function-name-face)
             '("\\<\\(?:with\\|extends\\)[ \t]\\([a-zA-z_][a-zA-z_0-9:]*\\)"
               1 font-lock-function-name-face)
